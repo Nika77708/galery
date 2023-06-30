@@ -6,8 +6,10 @@ export const Searchbar = ({ submitForm }) => {
   const onFormSubmit = event => {
     //отключили перезагрузку странички (дефолтные события браузера)
     event.preventDefault();
+
     // пробрасываем вверх данные из инпута
     submitForm(event.target.search.value)
+    
     // console.log(event.target.search.value);
   };
 

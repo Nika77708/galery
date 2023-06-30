@@ -1,4 +1,5 @@
 import { Searchbar } from './Form/Searchbar';
+import { useRef } from 'react';
 import css from './App.module.css';
 import { fetchImages } from 'servises/api';
 import { useEffect, useState } from 'react';
@@ -13,12 +14,18 @@ export const App = () => {
   const [status, setStatus] = useState('idel');
   const [totalHits, setTotalHits] = useState(0);
 
+  const ref = useRef(null)
+
   const onLoadMore = () => {
     setList(prevState => prevState + 1);
-    window.scrollTo({
-      top: 2000,
-      behavior: 'smooth',
-    });
+    //этот вариант срабатывает тольео на 2 или 3 раз 
+    // window.scrollTo({
+    //     top: 2000,
+    //     behavior: 'smooth',
+    //   });
+
+    //этот вариант не работает
+    ref.current.scrollIntoView({behavior: "smooth"})
   };
 
   useEffect(() => {
@@ -45,17 +52,14 @@ export const App = () => {
       })
       .catch(error => setStatus('rejected'));
   }, [search, list]);
-
-  console.log(images);
-
+//   console.log(images);
   // получили значение search из submitForm в Searchbar, перезаписали значение search в useState и задали для первого поиска 1 страницу
   const handleFormSubmit = search => {
     setSearch(search);
     setList(1);
     // console.log(search);
   };
-
-  console.log(list);
+//   console.log(list);
   return (
     <div className={css.App}>
       <Searchbar submitForm={handleFormSubmit} />
@@ -64,7 +68,7 @@ export const App = () => {
       {status === 'resolve' && (
         <>
           <ImageGallery images={images} />
-          {images.length < totalHits && <Button onClick={onLoadMore} />}
+          {images.length < totalHits && <Button ref={ref} onClick={onLoadMore} />}
         </>
       )}
       {status === 'rejected' && <div>Nothing has been found</div>}
