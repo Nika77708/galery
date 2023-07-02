@@ -18,14 +18,10 @@ export const App = () => {
 
   const onLoadMore = () => {
     setList(prevState => prevState + 1);
-    //этот вариант срабатывает тольео на 2 или 3 раз 
-    // window.scrollTo({
-    //     top: 2000,
-    //     behavior: 'smooth',
-    //   });
 
-    //этот вариант не работает
-    ref.current.scrollIntoView({behavior: "smooth"})
+    setTimeout(() => {
+        ref.current.scrollIntoView({ behavior: 'smooth' });
+      }, 1000);
   };
 
   useEffect(() => {

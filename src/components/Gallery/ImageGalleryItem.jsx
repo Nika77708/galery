@@ -13,7 +13,7 @@ export default function ImageGaleryItem({ webformatURL, tags }) {
   };
 
   useEffect(() => {
-    console.log('does it work?');
+    // console.log('does it work?');
     if (status) {
       window.addEventListener('keydown', onEscape);
     } else {
